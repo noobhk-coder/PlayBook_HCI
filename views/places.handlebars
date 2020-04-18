@@ -1,0 +1,52 @@
+<nav >
+    <div class="nav-wrapper #212121 grey darken-4">
+        <a href="/home" class="brand-logo">Playbook</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/venues">Set up a game</a></li>
+            <li><a href="/join">Join a game</a></li>
+            <li><a href="/news">News</a></li>
+            <li><a href="/profile">My Account</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container newsback">
+
+{{#each places}}
+<div class="#f3e5f5 purple-text text-lighten-5">
+<form class="someform" id="some_form1" method="post" action="bookingInfo">
+<h5 name="Name" class="textonly">Name:{{{this.name}}}</h5> 
+<p name="Address" class="textonly">Address:{{{this.formatted_address}}}</p> 
+<p class="textonly">Open Now:{{{this.opening_hours.open_now}}}</p> 
+<select required name="time"> 
+    <option disabled value="" selected>Choose time</option> 
+    {{#each timeJson.time}}    
+        <option>{{this}}</option>         
+    {{/each}}  
+</select>  
+<p class="textonly">Rating:{{{this.rating}}}</p>     
+<img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={{{this.photos.0.photo_reference}}}&key=AIzaSyAgCmZMYCBmuNLO_gJOxCWzobV3DLvtevY"></img>
+<iframe  width="600" height="450" frameborder="0" style="border:0;height:300px;width:300px" src="https://www.google.com/maps/embed/v1/place?q=place_id:{{{this.place_id}}}&key=AIzaSyAgCmZMYCBmuNLO_gJOxCWzobV3DLvtevY" allowfullscreen></iframe>
+
+{{!-- <a href="/venues">"Make another search"</a>   --}}
+
+
+ 
+
+<button class="btn waves-effect waves-light" type="submit" name="submit" value={{@index}}>Submit        
+    <i class="material-icons right">send</i>    
+</button>    
+ 
+</form>
+</div> 
+{{/each}} 
+</div>
+
+<script> 
+$(document).ready(function(){ 
+    $('select').formSelect();
+  }); 
+$("select[required]").css({display: "block", height: 0, padding: 0, width: 0, position: 'absolute'});  
+</script>

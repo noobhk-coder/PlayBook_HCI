@@ -1,0 +1,96 @@
+{{#if userNotLogged}}
+<nav class="our-bar textonly">
+  <div class="nav-wrapper">
+    <a href="/" class="brand-logo">Playbook</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      {{!-- <li><a href="/venues">Set up a game</a></li> --}}
+      <li><a href="/join">Join a game</a></li>
+      <li><a href="/news">News</a></li>
+      <li><a href="/signup">Signup</a></li>
+      <li><a href="/login">Login</a></li>
+    </ul>
+  </div>
+</nav>
+{{/if}}
+
+
+{{#if userLogged}}
+<nav class="our-bar textonly">
+  <div class="nav-wrapper">
+    <a href="/" class="brand-logo">Playbook</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a href="/venues">Set up a game</a></li>
+      <li><a href="/join">Join a game</a></li>
+      <li><a href="/news">News</a></li>
+      {{!-- <li><a href="/signup">Signup</a></li> --}}
+      <li><a href="/profile">My Account</a></li>
+      <li><a href="/Logout">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+{{/if}}
+
+
+
+<div class="parallax-container">
+  <div class="parallax">
+    <img src="/public/basketball-wallpaper-ultra-hd-4k-156530.jpg"></img>
+  </div>
+  <div class="section no-pad-bot">
+    <div class="container">
+      <br><br>
+      {{#if userNotLogged}}
+      <h1 class="header center #fafafa grey-text text-lighten-5">Hello Stranger!</h1>
+      {{/if}}
+      {{#if userLogged}}
+      <h1 class="header center #fafafa grey-text text-lighten-5">Hello {{firstName}}</h1>
+      {{/if}}
+      <div class="row center">
+        <h2 class="header left col s12 #fafafa grey-text text-lighten-5">What do you want to play today?</h2>
+      </div>
+      <br><br>
+    </div>
+  </div>
+</div>
+
+
+<div class="contianer">
+  <div class="sectionOverwrite">
+    <div class="row">
+      <div class="col s12 m4 ">
+        <div class="icon-block">
+          <h1 class="center"><i class="large material-icons">event</i></h1>
+          <h2 class="center text">Create/Join Sports Events</h1>
+            <p class="center text">Create and join the sports events you like.</p>
+        </div>
+      </div>
+      <a href="/news">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h1 class="center"><i class="large material-icons">trending_up</i></h1>
+            <h2 class="center text">Latest News</h1>
+              <p class="center text">Get all the latest news articles from the sports you like.</p>
+          </div>
+        </div>
+      </a>
+      <div class="col s12 m4 ">
+        <div class="icon-block">
+          <h1 class="center"><i class="large material-icons">directions</i></h1>
+          <h2 class="center text">Venues</h1>
+            <p class="center text">Book a ground to play your favourite sport</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function () {
+    $('.parallax').parallax();
+  });
+
+  $(document).ready(function () {
+    $('select').formSelect();
+  });
+</script>

@@ -1,0 +1,27 @@
+{
+    "name": "cs-546-lab-9",
+    "version": "1.0.0",
+    "description": "The Playbook",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "seed": "node ./js/seed.js",
+        "dev": "nodemon app.js"
+    },
+    "author": "PlayBook developers",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.19.0",
+        "bcryptjs": "^2.4.3",
+        "cookie-parser": "^1.4.4",
+        "express": "^4.17.1",
+        "express-handlebars": "3.1.0",
+        "express-session": "^1.17.0",
+        "handlebars": "^4.5.3",
+        "mongodb": "^3.3.5",
+        "seed": "^0.4.4"
+    },
+    "devDependencies": {
+        "nodemon": "^1.19.4"
+    }
+}

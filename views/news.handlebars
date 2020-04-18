@@ -1,0 +1,90 @@
+<main>
+{{#if userNotLogged}}
+<nav class="our-bar textonly">
+    <div class="text nav-wrapper">
+        <a href="/" class="text brand-logo">Playbook</a>
+        <ul id="nav-mobile" class="text right hide-on-med-and-down">
+            {{!-- <li><a href="/venues">Set up a game</a></li> --}}
+            <li><a href="/join">Join a game</a></li>
+            <li><a href="/news">News</a></li>
+            <li><a href="/signup">Signup</a></li>
+            <li><a href="/login">Login</a></li>
+        </ul>
+    </div>
+</nav>
+{{/if}}
+
+
+{{#if userLogged}}
+<nav class="our-bar textonly">
+    <div class="text nav-wrapper">
+        <a href="/" class="text brand-logo">Playbook</a>
+        <ul id="nav-mobile" class="text right hide-on-med-and-down">
+            <li><a href="/venues">Set up a game</a></li>
+            <li><a href="/join">Join a game</a></li>
+            <li><a href="/news">News</a></li>
+            {{!-- <li><a href="/signup">Signup</a></li> --}}
+            <li><a href="/profile">My Account</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+{{/if}}
+
+<div class="text container newsback">
+
+    <div>
+       <center><h1 class="textonly">Top News</h1></center> 
+    </div>
+
+    <div class="text col s12">
+        <div class="text card large horizontal hoverable">
+            <div class="text card-image waves-effect waves-block waves-light">
+                <img class="text activator responsive-img" alt="image" src="{{firstNews.urlToImage}}">
+            </div>
+            
+            <div class="text test-card">
+            <div class="text card-content">
+                <p style="font-size:2.0rem;" class="text  card-title center activator">{{firstNews.title}}</p>
+                <div class="text ">
+                    <a class="text" href="#">Read more</a>
+                </div>
+            </div>
+            </div>
+
+            <div class="text card-reveal">
+                <span class="text card-title #ffab40 orange-text text-accent-2">{{{firstNews.title}}}<i class="text material-icons right">close</i></span>
+                <p style="font-size:1.5rem;" class="text">{{{firstNews.description}}}</p>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="text row">
+        {{#each articles}}
+        <div class="text col s12 m4">
+            <div class="text card medium hoverable">
+                <div class="text card-image waves-effect waves-block waves-light">
+                    <img class="text activator responsive-img" alt="image" src="{{{this.urlToImage}}}">
+                </div>
+
+                <div class="text card-content">
+                    <span style="" class="text card-title activator">{{this.title}}</span>
+                    <div class="text ">
+                        <a class="text" href="{{this.url}}">Read more</a>
+                    </div>
+                </div>
+
+                <div class="text card-reveal #263238 blue-grey darken-4">
+                    <span class="text card-title #ffab40 orange-text text-accent-2">{{{this.title}}}<i class="text material-icons right">close</i></span>
+                    <p style="font-size:1.5rem;" class="text">{{{this.description}}}</p>
+                </div>
+
+                
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+</div>
+</main>

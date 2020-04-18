@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css?family=Lilita+One&display=swap');
+
+logo img {
+    width: 60px;
+    height: 50px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+
+.container-signUp {
+    text-align: center !important;
+    width: 100%;
+    height : 100%;
+    opacity : 95%;
+}
+
+body{
+    width: 100%;
+    height : 100%;
+    background: url('/public/basketball-wallpaper-ultra-hd-4k-156530.jpg');
+
+}
+
+.approve-event {
+    background-color: lightgreen;
+    font-weight: bold;
+    height: 25px;
+    border-color: black;
+}
+
+.reject-event {
+    background-color: lightcoral;
+    font-weight: bold;
+    height: 25px;
+    border-color: black;
+}
+
+.events-table {
+    margin-left: 12px;
+    margin-right: 12px;
+    align-content: right;
+}
+
+.test-card {
+    width: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    
+}
+.card-action-text {
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-wrapper{
+    background-color: #bf360c;
+    color: #fafafa;
+}
+
+.news-background{
+    background: url('/public/basketball-wallpaper-ultra-hd-4k-156530.jpg');
+}
+
+.all-background{
+    background: url('/public/basketball-wallpaper-ultra-hd-4k-156530.jpg');
+}
+
+.container-auth{
+    height: 100%;
+    width: 100%;
+}
+
+.btn{
+    background-color: #bf360c;
+    color: #fafafa;
+}
+
+.text {
+    color: #bf360c;
+    font-variant: small-caps;
+    font-family: 'Lilita One', cursive;
+}
+
+.text-black {
+    color: #000000;
+    font-variant: small-caps;
+    font-family: 'Lilita One', cursive;
+}
+
+.textonly {
+    color : #fafafa;
+    font-variant: small-caps;
+    font-family: 'Lilita One', cursive;
+}
+
+
+select{
+    color: #bf360c;
+    font-variant: small-caps;
+    font-family: 'Lilita One', cursive;
+}
+
+label{
+    color: #bf360c;
+}
+
+.sectionOverwrite {
+    background-color: #fafafa;
+}
+
+.our-bar{
+    background-color: #bf360c;
+}
+
+.newsback{
+    background-color: #bf360c;
+}
+
+h1{
+    font-size: 40pt;
+}
