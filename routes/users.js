@@ -4,14 +4,15 @@ const collections = require('../config/mongoCollections');
 const userDataFromDatabase = collections.Users
 const userData = require("../data/users");
 
-router.get('/login', async(req, res) => {
+router.get('/login', async (req, res) => {
     console.log('/login get');
+    console.log(process.env.PASS_ONE); 
     return res.render('login');
 })
 
-router.get('/admin', async(req, res) => {
+router.get('/admin', async (req, res) => {
     let check = await userData.adminValid(req.session.userId);
-    if (req.session.userId && check==true) {
+    if (req.session.userId && check == true) {
         try {
             const events = await userData.getAllFutureEvents();
             res.status(200).render('adminHome', { title: "Admin", events: events });
@@ -23,13 +24,13 @@ router.get('/admin', async(req, res) => {
     }
 })
 
-router.get('/signup', async(req, res) => {
+router.get('/signup', async (req, res) => {
     return res.render('signup', { title: "Signup" });
 })
 
-router.get('/', async(req, res) => {
+router.get('/', async (req, res) => {
     try {
-       
+
         console.log("/ get")
         res.redirect('home');
 
@@ -41,9 +42,10 @@ router.get('/', async(req, res) => {
 
 
 
-router.post('/login', async(req, res) => {
+router.post('/login', async (req, res) => {
     try {
         console.log("reached second login");
+
         let formData = req.body;
         let check = await userData.loggingTheUser(formData.email, formData.password);
         if (check != -1) {
@@ -58,7 +60,7 @@ router.post('/login', async(req, res) => {
     }
 })
 
-router.post('/signup', async(req, res) => {
+router.post('/signup', async (req, res) => {
     try {
         console.log("reached second signup");
         let emailCheck = await userData.userExistsCheck(req.body.email);
@@ -86,7 +88,7 @@ router.post('/signup', async(req, res) => {
     }
 })
 
-router.post('/admin', async(req, res) => {
+router.post('/admin', async (req, res) => {
     try {
         let formData = req.body;
         let check = await userData.checkAdminLogin(formData.username, formData.password);
@@ -94,7 +96,7 @@ router.post('/admin', async(req, res) => {
             req.session.userId = formData.username;
             req.session.AuthCookie = req.sessionID;
             //console.log(req.session.userId);
-            const events = await userData.getAllFutureEvents(); 
+            const events = await userData.getAllFutureEvents();
             res.status(200).render('adminHome', { title: "Admin Approval", events: events });
         } else {
             res.status(401).render('admin', { error: "Wrong Admin Username or Password" });
@@ -102,47 +104,47 @@ router.post('/admin', async(req, res) => {
     } catch (e) {
         res.status(404).json({ error: e.message });
     }
-}) 
+})
 
 
-router.get('/logout', async(req, res) => {
+router.get('/logout', async (req, res) => {
     console.log("reached logout");
-    req.session.destroy(function() {
+    req.session.destroy(function () {
         res.clearCookie('AuthCookie');
         return res.redirect("/");
     });
 })
 
-router.get('/adminLogout', async(req, res) => {
-    req.session.destroy(function() {
+router.get('/adminLogout', async (req, res) => {
+    req.session.destroy(function () {
         res.clearCookie('AuthCookie');
         return res.redirect("/home");
     });
 })
 
-router.get('/home', async(req, res) => {
+router.get('/home', async (req, res) => {
     //Will replace the private route above
     try {
         console.log("reached home");
         //let session_ID = req.session.userId;
-       //const userObj = await userData.getUserByID(session_ID);
-       let userNotLogged;
-       let userLogged;
-       let currentUserFirst = "";
-       if(req.session.userId) {
+        //const userObj = await userData.getUserByID(session_ID);
+        let userNotLogged;
+        let userLogged;
+        let currentUserFirst = "";
+        if (req.session.userId) {
             userNotLogged = false;
             userLogged = true;
             const userCollection = await userDataFromDatabase();
-          //  console.log(req.session.userId)
-             currentUser = await userCollection.findOne({ email: req.session.userId });
-             currentUserFirst = currentUser.firstName
-          //   console.log(currentUser.firstName)
+            //  console.log(req.session.userId)
+            currentUser = await userCollection.findOne({ email: req.session.userId });
+            currentUserFirst = currentUser.firstName
+            //   console.log(currentUser.firstName)
 
-       } else {
-         userNotLogged = true;
-         userLogged = false;
-       }
-        return res.status(200).render("home", {  title: "Playbook" , userNotLogged:userNotLogged, userLogged: userLogged,firstName:currentUserFirst});
+        } else {
+            userNotLogged = true;
+            userLogged = false;
+        }
+        return res.status(200).render("home", { title: "Playbook", userNotLogged: userNotLogged, userLogged: userLogged, firstName: currentUserFirst });
     } catch (e) {
         res.status(404).json({ error: e.message });
     }
@@ -150,24 +152,24 @@ router.get('/home', async(req, res) => {
 
 
 
-router.get('/profile', async(req, res) => {
+router.get('/profile', async (req, res) => {
     //Venu's Part
     try {
         console.log("reached profile");
         let session_ID = req.session.userId;
         const userObj = await userData.getUserByID(session_ID);
         const userCollection = await userDataFromDatabase();
-        let userDataPresent = await userCollection.findOne({email:session_ID});
+        let userDataPresent = await userCollection.findOne({ email: session_ID });
 
 
-       
-        return res.status(200).render("profile", { userObj, title: "My Profile"});
+
+        return res.status(200).render("profile", { userObj, title: "My Profile" });
     } catch (e) {
         res.status(404).json({ error: e.message });
     }
 })
 
-router.post('/profile', async(req, res) => {
+router.post('/profile', async (req, res) => {
     //Venu's Part
     try {
         console.log("reached profile");
@@ -176,27 +178,26 @@ router.post('/profile', async(req, res) => {
         let session_ID = req.session.userId;
         const userCollection = await userDataFromDatabase();
         let updatedUserInfo = req.body;
-        let userDataPresent = await userCollection.findOne({email:updatedUserInfo.email});
+        let userDataPresent = await userCollection.findOne({ email: updatedUserInfo.email });
 
-        if(!updatedUserInfo.phoneNumber&&!updatedUserInfo.gender&&!updatedUserInfo.sport&&!updatedUserInfo.dob)
-        {
+        if (!updatedUserInfo.phoneNumber && !updatedUserInfo.gender && !updatedUserInfo.sport && !updatedUserInfo.dob) {
             res.redirect('profile');
         }
 
-        if(!updatedUserInfo.gender) {
+        if (!updatedUserInfo.gender) {
             updatedUserInfo.gender = userDataPresent.gender;
         }
-        if(!updatedUserInfo.sport) {
+        if (!updatedUserInfo.sport) {
             updatedUserInfo.sport = userDataPresent.interestedSport;
         }
 
-        
-        const userObj = await userData.updateProfileData(session_ID,updatedUserInfo);
-        return res.status(200).render("profile", { userObj, title: "My Profile"});
+
+        const userObj = await userData.updateProfileData(session_ID, updatedUserInfo);
+        return res.status(200).render("profile", { userObj, title: "My Profile" });
     } catch (e) {
         res.status(404).json({ error: e.message });
     }
-})  
+})
 
 
 

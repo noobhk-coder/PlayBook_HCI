@@ -3,7 +3,7 @@ const eventsData = collections.events;
 const mapsData = collections.maps;
 var ObjectId = require('mongodb').ObjectId;
 
-module.exports = {
+module.exports = { 
     async eventUpdateStatus(eventId, status) {
         
         const updatedEvent = {
@@ -197,13 +197,18 @@ module.exports = {
                 eventInfo.creator = event.creatorEmail;
                 eventInfo.date = event.date;
                 let mapsCollection = await mapsData()
+            //    console.log(mapsCollection) 
                 let mapInfo = await mapsCollection.findOne({ eventsId: event._id });
+            //    console.log("Hey")
+            //    console.log(mapInfo)
+
+                if(mapInfo != null){
                 eventInfo.time = mapInfo.time;
                 eventInfo.location = event.location;
                 eventInfo.groundName = mapInfo.name;
                 eventInfo.address = mapInfo.address;
-
-                result.push(eventInfo);
+                } 
+                result.push(eventInfo); 
             }
         }
         
@@ -233,6 +238,59 @@ module.exports = {
         const eventCollection = await eventsData();
         const userEvents = await eventCollection.find({ createdBy: userInfo._id }).toArray();
         return await userEvents;
-    }
+    },
+
+    async getSportCentricEvent(emailId, sportFilter) {
+
+
+        let eventCollection = await eventsData();
+        let res = await eventCollection.find({}).toArray();
+        let result = [];
+        
+        let j = 0;
+        for (let i = 0; i < res.length; i++) {
+            event = res[i];
+            let playerName = event.playersList;
+            var Found = false;
+            if (playerName !== undefined) {
+                playerName.forEach(element => {
+                    if (element.email === emailId) {
+                        Found = true;
+                    }
+
+                });
+            }
+           
+            if (event.status == "approved" && event.noOfPlayers > 0 && Found == false && event.creatorEmail !== emailId && event.sports === sportFilter) {
+                let eventInfo = {
+                    "_id": "",
+                    "sport": "",
+                    "creator": "",
+                    "date": "",
+                    "time": "",
+                    "location": "",
+                    "groundName": "",
+                    "address": ""
+                }
+                eventInfo._id = event._id;
+                eventInfo.sport = event.sports;
+                eventInfo.creator = event.creatorEmail;
+                eventInfo.date = event.date;
+                let mapsCollection = await mapsData()
+                let mapInfo = await mapsCollection.findOne({ eventsId: event._id });
+               
+                if(mapInfo != null){
+                eventInfo.time = mapInfo.time;
+                eventInfo.location = event.location;
+                eventInfo.groundName = mapInfo.name;
+                eventInfo.address = mapInfo.address;
+                } 
+                result.push(eventInfo); 
+            }
+        }
+        
+
+        return result;
+    },
 
 }
